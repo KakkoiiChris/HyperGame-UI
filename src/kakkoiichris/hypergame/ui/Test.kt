@@ -13,23 +13,22 @@ class Test(view: View) : UIState(view) {
     init {
         root.layout = Layout.HardGrid(3u, 3u)
 
-        root.add(createButton("Dokibird", 10u, Color(255, 200, 0)))
-        root.add(createButton("Selen Tatsuki", 15u, Color(150, 100, 255)))
-        root.add(createButton("Mint Fantôme", 20u, Color(100, 200, 170)))
-        root.add(createButton("Pomu Rainpuff", 25u, Color(50, 150, 150)))
-        root.add(createButton("Quinn Benet", 30u, Color(150, 50, 150)))
-        root.add(createButton("Kyo Kaneko", 35u, Color(110, 120, 200)))
+        root.add(createButton("Dokibird", 10u))
+        root.add(createButton("Selen Tatsuki", 15u))
+        root.add(createButton("Mint Fantôme", 20u))
+        root.add(createButton("Pomu Rainpuff", 25u))
+        root.add(createButton("Quinn Benet", 30u))
+        root.add(createButton("Kyo Kaneko", 35u))
     }
 
     private var n = 0
 
-    private fun createButton(text: String, margin: UInt, accent: Color) =
-        Button(text).apply {
+    private fun createButton(text: String, margin: UInt) =
+        CheckBox(text).apply {
             this.margin = margin
-            this.accent = accent
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
-            onClick = { (source, time) -> println("${source.id} @ $time <$text>") }
+            onChange = { (source, time) -> println("${source.text} ${source.selected}") }
         }
 
     override fun swapTo(view: View) {

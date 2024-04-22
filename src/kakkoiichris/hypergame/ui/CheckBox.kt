@@ -41,26 +41,33 @@ open class CheckBox(var text: String = "") : Module() {
     }
 
     override fun render(view: View, renderer: Renderer) {
-        renderer.color = background
+        renderer.color = when {
+            hover -> background.brighter()
 
-        renderer.fillRect(this)
+            else  -> background
+        }
+
+        renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = foreground
 
         val sizeCheck = font.size
+        val space = sizeCheck / 4
         val xCheck = (left + paddingLeft.toDouble()).toInt()
         val yCheck = (top + (height / 2) - sizeCheck / 2).toInt()
 
-        renderer.drawRect(xCheck, yCheck, sizeCheck, sizeCheck)
-
-        if (selected) {
-            renderer.drawLine(xCheck, yCheck, xCheck + sizeCheck, yCheck + sizeCheck)
-            renderer.drawLine(xCheck, yCheck + sizeCheck, xCheck + sizeCheck, yCheck)
-        }
+        renderer.drawRoundRect(xCheck, yCheck, sizeCheck, sizeCheck, 2, 2)
 
         renderer.font = font
 
         renderer.drawString(text, this, xAlign = 0.9)
+
+        renderer.color = accent
+
+        if (selected) {
+            renderer.drawLine(xCheck + space, yCheck + space, xCheck + sizeCheck - space, yCheck + sizeCheck - space)
+            renderer.drawLine(xCheck + space, yCheck + sizeCheck - space, xCheck + sizeCheck - space, yCheck + space)
+        }
     }
 
     data class Event(

@@ -48,14 +48,12 @@ open class RadioButton private constructor(var text: String, private val group: 
 
     override fun render(view: View, renderer: Renderer) {
         renderer.color = when {
-            pressed -> accent.darker()
-
-            hover   -> accent
+            hover   -> background.brighter()
 
             else    -> background
         }
 
-        renderer.fillRect(this)
+        renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = foreground
 
@@ -65,13 +63,15 @@ open class RadioButton private constructor(var text: String, private val group: 
 
         renderer.drawOval(xDot, yDot, sizeDot, sizeDot)
 
-        if (selected) {
-            renderer.fillOval(xDot + sizeDot / 4, yDot + sizeDot / 4, sizeDot / 2, sizeDot / 2)
-        }
-
         renderer.font = font
 
         renderer.drawString(text, this, xAlign = 0.9)
+
+        renderer.color = accent
+
+        if (selected) {
+            renderer.fillOval(xDot + sizeDot / 4, yDot + sizeDot / 4, sizeDot / 2, sizeDot / 2)
+        }
     }
 
     data class Event(

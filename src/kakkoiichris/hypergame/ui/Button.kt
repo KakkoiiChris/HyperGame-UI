@@ -38,20 +38,21 @@ open class Button(var text: String = "") : Module() {
 
     override fun render(view: View, renderer: Renderer) {
         renderer.color = when {
-            pressed -> accent.darker()
+            pressed -> background.darker()
 
-            hover   -> accent
+            hover   -> background.brighter()
 
             else    -> background
         }
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
-        renderer.color = foreground
+        renderer.color = accent
         renderer.stroke = stroke
 
         renderer.drawRoundRect(this, cornerRadius, cornerRadius)
 
+        renderer.color = foreground
         renderer.font = font
 
         renderer.drawString(text, this)

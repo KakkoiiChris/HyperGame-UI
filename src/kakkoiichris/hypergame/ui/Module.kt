@@ -51,11 +51,11 @@ abstract class Module : Box(), Renderable {
     var marginBottom = 0U
     var marginLeft = 0U
 
-    var foreground = Color.BLACK
-    var background = Color(200, 200, 200)
-    var accent = Color(150, 200, 255)
+    var foreground = Color(72, 75, 90)
+    var background = Color(222, 232, 242)
+    var accent = Color(28, 152, 186)
 
-    var stroke = BasicStroke(2F)
+    var stroke = BasicStroke(4F)
     var cornerRadius = 16
 
     fun setPaddings(top: UInt = 0U, right: UInt = 0U, bottom: UInt = 0U, left: UInt = 0U) {
