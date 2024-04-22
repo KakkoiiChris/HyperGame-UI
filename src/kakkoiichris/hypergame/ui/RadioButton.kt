@@ -27,6 +27,13 @@ open class RadioButton private constructor(var text: String, private val group: 
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {
         super.update(view, manager, time, input)
 
+        if (!enabled) {
+            hover = false
+            pressed = false
+
+            return
+        }
+
         hover = input.mouse in this
 
         val lastPressed = pressed

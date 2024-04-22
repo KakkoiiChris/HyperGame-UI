@@ -6,29 +6,31 @@ import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Display
 import kakkoiichris.hypergame.view.View
-import java.awt.Color
 import java.awt.Font
 
 class Test(view: View) : UIState(view) {
     init {
-        root.layout = Layout.HardGrid(3u, 3u)
+        layout = Layout.HardGrid(3u, 3u)
 
-        root.add(createButton("Dokibird", 10u))
-        root.add(createButton("Selen Tatsuki", 15u))
-        root.add(createButton("Mint Fantôme", 20u))
-        root.add(createButton("Pomu Rainpuff", 25u))
-        root.add(createButton("Quinn Benet", 30u))
-        root.add(createButton("Kyo Kaneko", 35u))
+        add(createModule("Dokibird", 10u))
+        add(createModule("Mint Fantôme", 15u))
+        add(createModule("Quinn Benet", 20u))
+        add(createModule("K9 Kuro", 25u))
+        add(createModule("Matara Kan", 30u))
+        add(createModule("Michi Mochievee", 35u))
+        add(createModule("Sayu Sincronisity", 40u))
+        add(createModule("Unnämed", 45u))
+        add(createModule("Ksononair", 50u))
     }
 
     private var n = 0
 
-    private fun createButton(text: String, margin: UInt) =
-        CheckBox(text).apply {
+    private fun createModule(text: String, margin: UInt) =
+        Label(text).apply {
             this.margin = margin
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
-            onChange = { (source, time) -> println("${source.text} ${source.selected}") }
+            //onChange = { (source, _) -> println("<${source.text}>") }
         }
 
     override fun swapTo(view: View) {
@@ -41,8 +43,16 @@ class Test(view: View) : UIState(view) {
         super.update(view, manager, time, input)
 
         if (input.inWindow && input.keyHeld(Key.SPACE)) {
-            root.width = input.x.toDouble()
-            root.height = input.y.toDouble()
+            width = input.x.toDouble()
+            height = input.y.toDouble()
+        }
+
+        if (input.keyDown(Key.ESCAPE)) {
+            enabled = !enabled
+        }
+
+        if (input.keyDown(Key.ENTER)) {
+            children.forEach { it.enabled = !it.enabled }
         }
     }
 

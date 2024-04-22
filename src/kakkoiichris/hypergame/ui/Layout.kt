@@ -72,16 +72,6 @@ sealed interface Layout {
     }
 
     class Border : Layout {
-        companion object {
-            enum class Region {
-                TOP,
-                RIGHT,
-                BOTTOM,
-                LEFT,
-                CENTER,
-            }
-        }
-
         override fun invoke(parent: Panel, children: List<Module>) {
             val top = children[Region.TOP.ordinal]
             val right = children[Region.RIGHT.ordinal]
@@ -111,6 +101,14 @@ sealed interface Layout {
                 horizontalMaxHeight
             )
             center.setBounds(horizontalMaxWidth, verticalMaxHeight, centerMaxWidth, centerMaxHeight)
+        }
+
+        enum class Region {
+            TOP,
+            RIGHT,
+            BOTTOM,
+            LEFT,
+            CENTER,
         }
     }
 }

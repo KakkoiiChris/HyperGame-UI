@@ -21,6 +21,13 @@ open class CheckBox(var text: String = "") : Module() {
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {
         super.update(view, manager, time, input)
 
+        if (!enabled) {
+            hover = false
+            pressed = false
+
+            return
+        }
+
         hover = input.mouse in this
 
         val lastPressed = pressed

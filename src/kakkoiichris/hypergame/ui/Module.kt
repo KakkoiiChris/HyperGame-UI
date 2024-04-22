@@ -3,6 +3,7 @@ package kakkoiichris.hypergame.ui
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderable
 import kakkoiichris.hypergame.media.Renderer
+import kakkoiichris.hypergame.media.desaturated
 import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
@@ -51,11 +52,44 @@ abstract class Module : Box(), Renderable {
     var marginBottom = 0U
     var marginLeft = 0U
 
-    var foreground = Color(72, 75, 90)
-    var background = Color(222, 232, 242)
-    var accent = Color(28, 152, 186)
+    var enabled: Boolean
+        get() = selfEnabled && parent?.enabled != false
+        set(value) {
+            selfEnabled = value
+        }
 
-    var stroke = BasicStroke(4F)
+    private var selfEnabled = true
+
+    var foreground: Color
+        get() = if (enabled) foregroundOn else foregroundOff
+        set(value) {
+            foregroundOn = value
+            foregroundOff = value.desaturated().darker()
+        }
+
+    var background: Color
+        get() = if (enabled) backgroundOn else backgroundOff
+        set(value) {
+            backgroundOn = value
+            backgroundOff = value.desaturated().darker()
+        }
+
+    var accent: Color
+        get() = if (enabled) accentOn else accentOff
+        set(value) {
+            accentOn = value
+            accentOff = value.desaturated().darker()
+        }
+
+    var foregroundOn = Color(72, 75, 90)
+    var backgroundOn = Color(222, 232, 242)
+    var accentOn = Color(28, 152, 186)
+
+    var foregroundOff = foregroundOn.desaturated().darker()
+    var backgroundOff = backgroundOn.desaturated().darker()
+    var accentOff = accentOn.desaturated().darker()
+
+    var stroke = BasicStroke(4F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
     var cornerRadius = 16
 
     fun setPaddings(top: UInt = 0U, right: UInt = 0U, bottom: UInt = 0U, left: UInt = 0U) {
