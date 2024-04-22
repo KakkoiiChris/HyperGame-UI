@@ -11,7 +11,7 @@ import java.awt.Font
 open class Button(var text: String = "") : Module() {
     var font = Font("Monospaced", Font.PLAIN, 15)
 
-    var eventListener: (Event) -> Unit = {}
+    var onClick: (Event) -> Unit = {}
 
     private var hover = false
     private var pressed = false
@@ -32,7 +32,7 @@ open class Button(var text: String = "") : Module() {
         }
 
         if (pressed && !lastPressed) {
-            eventListener(Event(this, time.copy()))
+            onClick(Event(this, time.copy()))
         }
     }
 
@@ -45,11 +45,12 @@ open class Button(var text: String = "") : Module() {
             else    -> background
         }
 
-        renderer.fill(rectangle)
+        renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = foreground
+        renderer.stroke = stroke
 
-        renderer.draw(rectangle)
+        renderer.drawRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.font = font
 

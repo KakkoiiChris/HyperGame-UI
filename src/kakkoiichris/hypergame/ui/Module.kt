@@ -7,6 +7,7 @@ import kakkoiichris.hypergame.state.StateManager
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.util.math.Box
 import kakkoiichris.hypergame.view.View
+import java.awt.BasicStroke
 import java.awt.Color
 
 abstract class Module : Box(), Renderable {
@@ -51,8 +52,11 @@ abstract class Module : Box(), Renderable {
     var marginLeft = 0U
 
     var foreground = Color.BLACK
-    var background = Color.WHITE
-    var accent = Color.GRAY
+    var background = Color(200, 200, 200)
+    var accent = Color(150, 200, 255)
+
+    var stroke = BasicStroke(2F)
+    var cornerRadius = 16
 
     fun setPaddings(top: UInt = 0U, right: UInt = 0U, bottom: UInt = 0U, left: UInt = 0U) {
         paddingTop = top
@@ -103,11 +107,12 @@ abstract class Module : Box(), Renderable {
     override fun render(view: View, renderer: Renderer) {
         renderer.color = background
 
-        renderer.fillRect(this)
+        renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = foreground
+        renderer.stroke = stroke
 
-        renderer.drawRect(this)
+        renderer.drawRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = accent
 

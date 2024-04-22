@@ -13,25 +13,23 @@ class Test(view: View) : UIState(view) {
     init {
         root.layout = Layout.HardGrid(3u, 3u)
 
-        val group = RadioButton.Group()
-
-        root.add(group.createButton("Dokibird", 10u, Color(255, 200, 0)))
-        root.add(group.createButton("Selen Tatsuki", 15u, Color(150, 100, 255)))
-        root.add(group.createButton("Mint Fantôme", 20u, Color(100, 200, 170)))
-        root.add(group.createButton("Pomu Rainpuff", 25u, Color(50, 150, 150)))
-        root.add(group.createButton("Quinn Benet", 30u, Color(150, 50, 150)))
-        root.add(group.createButton("Kyo Kaneko", 35u, Color(110, 120, 200)))
+        root.add(createButton("Dokibird", 10u, Color(255, 200, 0)))
+        root.add(createButton("Selen Tatsuki", 15u, Color(150, 100, 255)))
+        root.add(createButton("Mint Fantôme", 20u, Color(100, 200, 170)))
+        root.add(createButton("Pomu Rainpuff", 25u, Color(50, 150, 150)))
+        root.add(createButton("Quinn Benet", 30u, Color(150, 50, 150)))
+        root.add(createButton("Kyo Kaneko", 35u, Color(110, 120, 200)))
     }
 
     private var n = 0
 
-    private fun RadioButton.Group.createButton(text: String, margin: UInt, accent: Color) =
-        create(text).apply {
+    private fun createButton(text: String, margin: UInt, accent: Color) =
+        Button(text).apply {
             this.margin = margin
             this.accent = accent
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
-            eventListener = { (source, time) -> println("${source.selected} @ ${time}<$text>") }
+            onClick = { (source, time) -> println("${source.id} @ $time <$text>") }
         }
 
     override fun swapTo(view: View) {

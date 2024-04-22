@@ -11,7 +11,7 @@ import java.awt.Font
 open class RadioButton private constructor(var text: String, private val group: Group) : Module() {
     var font = Font("Monospaced", Font.PLAIN, 15)
 
-    var eventListener: (Event) -> Unit = {}
+    var onChange: (Event) -> Unit = {}
 
     var selected = false
 
@@ -21,7 +21,7 @@ open class RadioButton private constructor(var text: String, private val group: 
     private fun toggle(selected: Boolean, time: Time) {
         this.selected = selected
 
-        eventListener(Event(this, time.copy()))
+        onChange(Event(this, time.copy()))
     }
 
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {

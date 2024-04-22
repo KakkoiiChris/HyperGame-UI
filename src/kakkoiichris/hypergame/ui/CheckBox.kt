@@ -11,7 +11,7 @@ import java.awt.Font
 open class CheckBox(var text: String = "") : Module() {
     var font = Font("Monospaced", Font.PLAIN, 15)
 
-    var eventListener: (Event) -> Unit = {}
+    var onChange: (Event) -> Unit = {}
 
     var selected = false
 
@@ -36,7 +36,7 @@ open class CheckBox(var text: String = "") : Module() {
         if (pressed && !lastPressed) {
             selected = !selected
 
-            eventListener(Event(this, time.copy()))
+            onChange(Event(this, time.copy()))
         }
     }
 
