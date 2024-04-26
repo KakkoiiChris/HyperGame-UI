@@ -1,19 +1,21 @@
-package kakkoiichris.hypergame.ui
+package kakkoiichris.hypergame.ui.form
 
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.ui.Module
+import kakkoiichris.hypergame.ui.form.Button.Event
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 import java.awt.Font
 
-open class CheckBox(var text: String = "") : Module() {
+class TextBox(var text: String = "") : Module() {
     var font = Font("Monospaced", Font.PLAIN, 15)
 
     var onChange: (Event) -> Unit = {}
 
-    var selected = false
+    var prompt = "Text Here..."
 
     private var hover = false
     private var pressed = false
@@ -23,7 +25,7 @@ open class CheckBox(var text: String = "") : Module() {
 
         if (!enabled) {
             hover = false
-            pressed = false
+            focused = false
 
             return
         }
@@ -41,44 +43,49 @@ open class CheckBox(var text: String = "") : Module() {
         }
 
         if (pressed && !lastPressed) {
-            selected = !selected
+            getRoot().defocusTree()
 
-            onChange(Event(this, time.copy()))
+            focused = true
+        }
+
+        if (focused && input.anyKeyDown()) {
+            when (val char = input.getTypedChar()) {
+                '\b' -> text = text.substring(0, text.length - 1)
+
+                '\n' -> {
+                    focused = false
+
+                    return
+                }
+
+                else -> text += char ?: return
+            }
         }
     }
 
     override fun render(view: View, renderer: Renderer) {
-        renderer.color = when {
-            hover -> background.brighter()
+        super.render(view, renderer)
 
-            else  -> background
+        renderer.color = when {
+            pressed          -> background.darker()
+
+            hover || focused -> background.brighter()
+
+            else             -> background
         }
 
         renderer.fillRoundRect(this, cornerRadius, cornerRadius)
 
         renderer.color = foreground
+        renderer.stroke = stroke
 
-        val sizeCheck = font.size
-        val space = sizeCheck / 4
-        val xCheck = (left + paddingLeft.toDouble()).toInt()
-        val yCheck = (top + (height / 2) - sizeCheck / 2).toInt()
+        renderer.drawRoundRect(this, cornerRadius, cornerRadius)
 
-        renderer.drawRoundRect(xCheck, yCheck, sizeCheck, sizeCheck, 2, 2)
-
+        renderer.color = if (text.isEmpty()) foreground.brighter() else foreground
         renderer.font = font
 
-        renderer.drawString(text, this, xAlign = 0.9)
+        val displayText = text.takeIf { it.isNotEmpty() } ?: prompt
 
-        renderer.color = accent
-
-        if (selected) {
-            renderer.drawLine(xCheck + space, yCheck + space, xCheck + sizeCheck - space, yCheck + sizeCheck - space)
-            renderer.drawLine(xCheck + space, yCheck + sizeCheck - space, xCheck + sizeCheck - space, yCheck + space)
-        }
+        renderer.drawString(displayText, this, xAlign = 0.0)
     }
-
-    data class Event(
-        override val source: CheckBox,
-        override val time: Time,
-    ) : UIEvent<CheckBox>
 }

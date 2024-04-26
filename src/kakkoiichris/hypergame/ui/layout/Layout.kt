@@ -1,5 +1,6 @@
-package kakkoiichris.hypergame.ui
+package kakkoiichris.hypergame.ui.layout
 
+import kakkoiichris.hypergame.ui.Module
 import kotlin.math.min
 
 sealed interface Layout {

@@ -1,9 +1,11 @@
-package kakkoiichris.hypergame.ui
+package kakkoiichris.hypergame.ui.form
 
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.ui.Module
+import kakkoiichris.hypergame.ui.UIEvent
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 import java.awt.Font
@@ -22,7 +24,7 @@ open class Button(var text: String = "") : Module() {
         if (!enabled) {
             hover = false
             pressed = false
-            
+
             return
         }
 
@@ -66,7 +68,7 @@ open class Button(var text: String = "") : Module() {
     }
 
     data class Event(
-        override val source: kakkoiichris.hypergame.ui.Button,
+        override val source: kakkoiichris.hypergame.ui.form.Button,
         override val time: Time,
-    ) : UIEvent<kakkoiichris.hypergame.ui.Button>
+    ) : UIEvent<kakkoiichris.hypergame.ui.form.Button>
 }

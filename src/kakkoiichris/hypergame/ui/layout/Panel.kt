@@ -1,7 +1,8 @@
-package kakkoiichris.hypergame.ui
+package kakkoiichris.hypergame.ui.layout
 
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.ui.Module
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 

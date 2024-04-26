@@ -3,6 +3,8 @@ package kakkoiichris.hypergame.ui
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.input.Key
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.ui.form.TextBox
+import kakkoiichris.hypergame.ui.layout.Layout
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.Display
 import kakkoiichris.hypergame.view.View
@@ -12,25 +14,24 @@ class Test(view: View) : UIState(view) {
     init {
         layout = Layout.HardGrid(3u, 3u)
 
-        add(createModule("Dokibird", 10u))
-        add(createModule("Mint Fantôme", 15u))
-        add(createModule("Quinn Benet", 20u))
-        add(createModule("K9 Kuro", 25u))
-        add(createModule("Matara Kan", 30u))
-        add(createModule("Michi Mochievee", 35u))
-        add(createModule("Sayu Sincronisity", 40u))
-        add(createModule("Unnämed", 45u))
-        add(createModule("Ksononair", 50u))
+        add(createModule("Dokibird"))
+        add(createModule("Mint Fantôme"))
+        add(createModule("Quinn Benet"))
+        add(createModule("K9 Kuro"))
+        add(createModule("Matara Kan"))
+        add(createModule("Michi Mochievee"))
+        add(createModule("Sayu Sincronisity"))
+        add(createModule("Unnämed"))
+        add(createModule("Ksononair"))
     }
 
     private var n = 0
 
-    private fun createModule(text: String, margin: UInt) =
-        Label(text).apply {
-            this.margin = margin
+    private fun createModule(text: String) =
+        TextBox().apply {
+            margin = 10u
             id = "button_${n++}"
             font = Font("Times New Roman", Font.PLAIN, 20)
-            //onChange = { (source, _) -> println("<${source.text}>") }
         }
 
     override fun swapTo(view: View) {

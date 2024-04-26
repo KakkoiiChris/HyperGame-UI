@@ -1,9 +1,11 @@
-package kakkoiichris.hypergame.ui
+package kakkoiichris.hypergame.ui.form
 
 import kakkoiichris.hypergame.input.Button
 import kakkoiichris.hypergame.input.Input
 import kakkoiichris.hypergame.media.Renderer
 import kakkoiichris.hypergame.state.StateManager
+import kakkoiichris.hypergame.ui.Module
+import kakkoiichris.hypergame.ui.UIEvent
 import kakkoiichris.hypergame.util.Time
 import kakkoiichris.hypergame.view.View
 import java.awt.Font

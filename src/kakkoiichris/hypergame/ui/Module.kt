@@ -60,6 +60,8 @@ abstract class Module : Box(), Renderable {
 
     private var selfEnabled = true
 
+    var focused = false
+
     var foreground: Color
         get() = if (enabled) foregroundOn else foregroundOff
         set(value) {
@@ -130,6 +132,22 @@ abstract class Module : Box(), Renderable {
         }
 
         return null
+    }
+
+    fun getRoot(): Module {
+        var here = this
+
+        while (here.parent != null) {
+            here = here.parent!!
+        }
+
+        return here
+    }
+
+    fun defocusTree() {
+        focused = false
+
+        children.forEach { it.defocusTree() }
     }
 
     override fun update(view: View, manager: StateManager, time: Time, input: Input) {
